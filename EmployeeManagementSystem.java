@@ -58,7 +58,7 @@ public class EmployeeManagementSystem {
 			System.out.println("2 : Update Salary");
 			System.out.println("3 : Update Department");
 			System.out.println("4 : Remove employee");
-			System.out.println("5 : Count employee");
+			System.out.println("5 : Count employees");
 			System.out.println("6 : Print out employees");
 			System.out.println("7 : Update first name");
 			System.out.println("8 : Update last name");
@@ -127,26 +127,31 @@ public class EmployeeManagementSystem {
 			case 7:		// Update First name
 				System.out.println("What's the id of the employee whose first name you would like to update? (int)");
 				int updatedFirstNameId = scan.nextInt();
+				scan.nextLine();
 				
 				System.out.println("What should their first name be? (String)");
 				String updatedFirstName = scan.nextLine();
 				
 				updateFirstName(employees, updatedFirstNameId, updatedFirstName);
+				
 				break;
 			case 8:		// Update Last name
 				System.out.println("What's the id of the employee whose last name you would like to update? (int)");
 				int updatedLastNameId = scan.nextInt();
+				scan.nextLine();
 				
 				System.out.println("What should their last name be? (String)");
 				String updatedLastName = scan.nextLine();
 				
 				updateLastName(employees, updatedLastNameId, updatedLastName);
+				
 				break;
 			case 9:		// Print department list
-				System.out.println("What department do you want to look at? (enum)");
+				System.out.println("What department would you like to look at? (enum)");
 				Department departmentListDepartment = Department.valueOf(scan.nextLine().trim().toUpperCase());
 				
 				departmentEmployeeList(employees, departmentListDepartment);
+				
 				break;
 			default:
 				System.out.println("Please select an integer from 1-9");
@@ -267,6 +272,7 @@ public class EmployeeManagementSystem {
 		for(int i = 0; i < employees.size(); i++) {
 			if(employees.get(i).getId() == id) {
 				employees.get(i).setSalary(salary);
+				break;
 			}
 		}
 	}
@@ -275,6 +281,7 @@ public class EmployeeManagementSystem {
 		for(int i = 0; i < employees.size(); i++) {
 			if(employees.get(i).getId() == id) {
 				employees.get(i).setDepartment(department);
+				break;
 			}
 		}
 	}
@@ -283,6 +290,7 @@ public class EmployeeManagementSystem {
 		for(int i = 0; i < employees.size(); i++) {
 			if(employees.get(i).getId() == id) {
 				employees.get(i).setFirstName(firstName);
+				break;
 			}
 		}
 	}
@@ -290,7 +298,8 @@ public class EmployeeManagementSystem {
 	public static void updateLastName(List<Employee> employees, int id, String lastName) {
 		for(int i = 0; i < employees.size(); i++) {
 			if(employees.get(i).getId() == id) {
-				employees.get(i).setFirstName(lastName);
+				employees.get(i).setLastName(lastName);
+				break;
 			}
 		}
 	}
@@ -299,13 +308,14 @@ public class EmployeeManagementSystem {
 		for(int i = 0; i < employees.size(); i++) {
 			if(employees.get(i).getId() == id) {
 				employees.remove(i);
+				break;
 			}
 		}
 	}
 	
 	public static void countEmployees(List<Employee> employees) {
 		long count = employees.stream().distinct().count();
-		System.out.println(count);
+		System.out.println("There are " + count + " employees");
 	}
 
 	public static void writeToCSVFile(List<Employee> employees) {
@@ -400,10 +410,12 @@ public class EmployeeManagementSystem {
 	}
 	
 	public static void departmentEmployeeList(List<Employee> employees, Department department) {
+		System.out.println(department + " Department List:");
 		for(int i = 0; i < employees.size(); i++) {
 			if (employees.get(i).getDepartment().equals(department)) {
 				System.out.println(employees.get(i).toString());
 			}	
 		}
+		System.out.println("\n");
 	}
 }
