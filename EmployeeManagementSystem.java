@@ -1,9 +1,16 @@
 package com.cognixia.JUMP.intermediateJava.employeemanagementsystem;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import com.cognixia.JUMP.intermediateJava.filesIO.Person;
 
 public class EmployeeManagementSystem {
 
@@ -11,7 +18,7 @@ public class EmployeeManagementSystem {
 		
 		initializeEmployees();
 		
-//		Employee[] employees = new Employee[10];
+		List<Employee> employees = readEmployees();
 
 	}
 	
@@ -53,6 +60,42 @@ public class EmployeeManagementSystem {
 		} catch(IOException e) {
 			System.out.println("System did not add employees to file");
 			e.printStackTrace();
+		}
+	}
+	
+	public static List<Employee> readEmployees() {
+		
+		File file = new File("resources/employees.data");
+		
+		try (ObjectInputStream reader = new ObjectInputStream(new FileInputStream(file))){
+			
+			Employee employee01 = (Employee) reader.readObject();
+			Employee employee02 = (Employee) reader.readObject();
+			Employee employee03 = (Employee) reader.readObject();
+			Employee employee04 = (Employee) reader.readObject();
+			Employee employee05 = (Employee) reader.readObject();
+			Employee employee06 = (Employee) reader.readObject();
+			Employee employee07 = (Employee) reader.readObject();
+			Employee employee08 = (Employee) reader.readObject();
+			Employee employee09 = (Employee) reader.readObject();
+			
+			List<Employee> employees = Arrays.asList(employee01, employee02, employee03, employee04, employee05, 
+					employee06, employee07, employee08, employee09);
+			
+			for(Employee employee : employees) {
+				System.out.println(employee.toString());
+			}
+			
+			return employees;
+			
+		} catch(IOException e) {
+			e.printStackTrace();
+			List<Employee> employees = new ArrayList<Employee>();
+			return employees;
+		} catch(ClassNotFoundException e) {
+			e.printStackTrace();
+			List<Employee> employees = new ArrayList<Employee>();
+			return employees;
 		}
 	}
 

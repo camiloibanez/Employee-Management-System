@@ -62,6 +62,12 @@ public class Employee implements Serializable {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	@Override
+	public String toString() {
+		return "Employee [department=" + department + ", Salary=" + Salary + ", firstName=" + firstName + ", lastName="
+				+ lastName + ", id=" + id + "]";
 	}	
 	
 }
