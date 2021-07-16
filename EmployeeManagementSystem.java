@@ -3,10 +3,12 @@ package com.cognixia.JUMP.intermediateJava.employeemanagementsystem;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -16,10 +18,11 @@ public class EmployeeManagementSystem {
 		
 //		initializeEmployees();
 //		
-//		List<Employee> employees = readEmployees();
-//		
-//		printEmployees(employees);
+		List<Employee> employees = readEmployees();
+		
+		printEmployees(employees);
 
+		writeToCSVFile(employees);
 //		updateSalary(employees, 123456, 62000);
 //		updateDepartment(employees, 135790, Department.MANAGEMENT);
 //		countEmployees(employees);
@@ -28,120 +31,120 @@ public class EmployeeManagementSystem {
 //		employees.add(testNewEmployee);
 //		printEmployees(employees);
 	
-		Scanner scan = new Scanner(System.in);
-		
-		System.out.println("Would you like to initialize employees file? ('yes' or 'no')");
-		String initialize = scan.nextLine();
-		initialize = initialize.trim();
-		initialize = initialize.toLowerCase();
-		
-		switch(initialize) {
-		case "yes":
-			initializeEmployees();
-			break;
-		case "no":
-			break;
-		}
-		
-		boolean keepEditingBool = false;
-		
-		List<Employee> employees = readEmployees();
-		printEmployees(employees);
-		System.out.println("\n");
-		
-		do {
-			System.out.println("What would you like to do with Employee list?");
-			System.out.println("1 : Add employee");
-			System.out.println("2 : Update Salary");
-			System.out.println("3 : Update Department");
-			System.out.println("4 : Remove employee");
-			System.out.println("5 : Count employee");
-			System.out.println("6 : Print out employees");
-			int input = scan.nextInt();
-			scan.nextLine();
-			
-			switch(input) {
-			case 1:
-				System.out.println("What is the new employee's first name? (String)");
-				String firstName = scan.nextLine();
-				
-				System.out.println("What is the new employee's last name? (String)");
-				String lastName = scan.nextLine();
-				
-				System.out.println("What is the new employee's department? (enum)");
-				Department department = Department.valueOf(scan.nextLine().trim().toUpperCase());
-				
-				System.out.println("What is the new employee's id? (int)");
-				int id = scan.nextInt();
-				
-				System.out.println("What is the new employee's salary? (int)");
-				int salary = scan.nextInt();
-				scan.nextLine();
-				
-				Employee newEmployee = new Employee(department, salary, firstName, lastName, id);
-				employees.add(newEmployee);
-				
-				break;
-			case 2:
-				System.out.println("What's the id of the employee whose salary you would like to update? (int)");
-				int updatedSalaryId = scan.nextInt();
-				
-				System.out.println("How much should their salary be? (int)");
-				int updatedSalary = scan.nextInt();
-				
-				scan.nextLine();
-				updateSalary(employees, updatedSalaryId, updatedSalary);
-				
-				break;
-			case 3:
-				System.out.println("What's the id of the employee whose salary you would like to update? (int)");
-				int updatedDepartmentId = scan.nextInt();
-				scan.nextLine();
-
-				System.out.println("What department do they now belong to? (enum)");
-				Department updatedDepartment = Department.valueOf(scan.nextLine().trim().toUpperCase());
-				
-				updateDepartment(employees, updatedDepartmentId, updatedDepartment);
-
-				break;
-			case 4:
-				System.out.println("What is the id of the employee you wish to remove? (int)");
-				int toRemoveId = scan.nextInt();
-				
-				scan.nextLine();
-				removeEmployee(employees, toRemoveId);
-				
-				break;
-			case 5:
-				countEmployees(employees);
-				break;
-			case 6:
-				printEmployees(employees);
-				break;
-			default:
-				System.out.println("Please select an integer from 1-6");
-				break;
-			}
-			
-			printEmployees(employees);
-			
-			System.out.println("Would you like to keep editing? ('yes' or 'no')");
-			String keepEditing = scan.nextLine();
-			keepEditing = keepEditing.trim();
-			keepEditing = keepEditing.toLowerCase();
-			
-			switch(keepEditing) {
-			case "yes":
-				keepEditingBool = true;
-				break;
-			case "no":
-				keepEditingBool = false;
-				break;
-			}
-			
-		} while(keepEditingBool);
-		
-		scan.close();
+//		Scanner scan = new Scanner(System.in);
+//		
+//		System.out.println("Would you like to initialize employees file? ('yes' or 'no')");
+//		String initialize = scan.nextLine();
+//		initialize = initialize.trim();
+//		initialize = initialize.toLowerCase();
+//		
+//		switch(initialize) {
+//		case "yes":
+//			initializeEmployees();
+//			break;
+//		case "no":
+//			break;
+//		}
+//		
+//		boolean keepEditingBool = false;
+//		
+//		List<Employee> employees = readEmployees();
+//		printEmployees(employees);
+//		System.out.println("\n");
+//		
+//		do {
+//			System.out.println("What would you like to do with Employee list?");
+//			System.out.println("1 : Add employee");
+//			System.out.println("2 : Update Salary");
+//			System.out.println("3 : Update Department");
+//			System.out.println("4 : Remove employee");
+//			System.out.println("5 : Count employee");
+//			System.out.println("6 : Print out employees");
+//			int input = scan.nextInt();
+//			scan.nextLine();
+//			
+//			switch(input) {
+//			case 1:
+//				System.out.println("What is the new employee's first name? (String)");
+//				String firstName = scan.nextLine();
+//				
+//				System.out.println("What is the new employee's last name? (String)");
+//				String lastName = scan.nextLine();
+//				
+//				System.out.println("What is the new employee's department? (enum)");
+//				Department department = Department.valueOf(scan.nextLine().trim().toUpperCase());
+//				
+//				System.out.println("What is the new employee's id? (int)");
+//				int id = scan.nextInt();
+//				
+//				System.out.println("What is the new employee's salary? (int)");
+//				int salary = scan.nextInt();
+//				scan.nextLine();
+//				
+//				Employee newEmployee = new Employee(department, salary, firstName, lastName, id);
+//				employees.add(newEmployee);
+//				
+//				break;
+//			case 2:
+//				System.out.println("What's the id of the employee whose salary you would like to update? (int)");
+//				int updatedSalaryId = scan.nextInt();
+//				
+//				System.out.println("How much should their salary be? (int)");
+//				int updatedSalary = scan.nextInt();
+//				
+//				scan.nextLine();
+//				updateSalary(employees, updatedSalaryId, updatedSalary);
+//				
+//				break;
+//			case 3:
+//				System.out.println("What's the id of the employee whose salary you would like to update? (int)");
+//				int updatedDepartmentId = scan.nextInt();
+//				scan.nextLine();
+//
+//				System.out.println("What department do they now belong to? (enum)");
+//				Department updatedDepartment = Department.valueOf(scan.nextLine().trim().toUpperCase());
+//				
+//				updateDepartment(employees, updatedDepartmentId, updatedDepartment);
+//
+//				break;
+//			case 4:
+//				System.out.println("What is the id of the employee you wish to remove? (int)");
+//				int toRemoveId = scan.nextInt();
+//				
+//				scan.nextLine();
+//				removeEmployee(employees, toRemoveId);
+//				
+//				break;
+//			case 5:
+//				countEmployees(employees);
+//				break;
+//			case 6:
+//				printEmployees(employees);
+//				break;
+//			default:
+//				System.out.println("Please select an integer from 1-6");
+//				break;
+//			}
+//			
+//			printEmployees(employees);
+//			
+//			System.out.println("\nWould you like to keep editing? ('yes' or 'no')");
+//			String keepEditing = scan.nextLine();
+//			keepEditing = keepEditing.trim();
+//			keepEditing = keepEditing.toLowerCase();
+//			
+//			switch(keepEditing) {
+//			case "yes":
+//				keepEditingBool = true;
+//				break;
+//			case "no":
+//				keepEditingBool = false;
+//				break;
+//			}
+//			
+//		} while(keepEditingBool);
+//		
+//		scan.close();
 		
 		writeToEmployees(employees);
 		
@@ -216,12 +219,6 @@ public class EmployeeManagementSystem {
 		}
 	}
 	
-	public static void printEmployees(List<Employee> employees) {
-		for(Employee employee : employees) {
-			System.out.println(employee.toString());
-		}
-	}
-	
 	public static void writeToEmployees(List<Employee> employees) {
 		File file = new File("resources/employees.txt");
 		
@@ -230,6 +227,12 @@ public class EmployeeManagementSystem {
 		} catch(IOException e) {
 			System.out.println("System did not update employees file");
 			e.printStackTrace();
+		}
+	}
+	
+	public static void printEmployees(List<Employee> employees) {
+		for(Employee employee : employees) {
+			System.out.println(employee.toString());
 		}
 	}
 	
@@ -262,4 +265,52 @@ public class EmployeeManagementSystem {
 		System.out.println(count);
 	}
 
+	public static void writeToCSVFile(List<Employee> employees) {
+		
+		List<List<String>> employeeCSV = new ArrayList<List<String>>();
+		for(int i = 0; i < employees.size(); i++ ) {
+			List<String> employeeAttributes = Arrays.asList(employees.get(i).getDepartment().toString(),
+					String.valueOf(employees.get(i).getSalary()),
+					employees.get(i).getFirstName(),
+					employees.get(i).getLastName(),
+					String.valueOf(employees.get(i).getId()));
+			employeeCSV.add(employeeAttributes);
+		}
+		
+		File csvFile = new File("resources/employees.csv");
+		
+		try {
+			if(!csvFile.exists()) {
+				csvFile.createNewFile();
+			}
+		} catch(IOException e) {
+			System.out.println("System did not create file");
+			e.printStackTrace();
+		}
+			
+		FileWriter csvWriter = null;
+		
+		try {
+			csvWriter = new FileWriter("resources/employees.csv");
+			csvWriter.append("Department,Salary,FirstName,LastName,Id\n");
+			
+			for(List<String> row : employeeCSV) {
+				csvWriter.append(String.join(",", row));
+				csvWriter.append("\n");
+			}
+		} catch (IOException e) {
+			System.out.println("Did not write to csv file");
+			e.printStackTrace();
+		} finally {
+			if(csvWriter != null ) {
+				try {
+					csvWriter.close();
+				} catch(IOException e) {
+					System.out.println("Did not close csv writer");
+					e.printStackTrace();
+				}
+			}
+		}
+
+	}
 }
