@@ -17,28 +17,23 @@ public class EmployeeManagementSystem {
 //		initializeEmployees();
 //		
 //		List<Employee> employees = readEmployees();
-		
+//		
 //		printEmployees(employees);
-//		
+
 //		updateSalary(employees, 123456, 62000);
-//		
 //		updateDepartment(employees, 135790, Department.MANAGEMENT);
-//
 //		countEmployees(employees);
-//		
 //		Employee testNewEmployee = new Employee(Department.HUMAN_RESOURCES, 44000, "Maddie", "Sherman", 147852);
-//		
 //		removeEmployee(employees, 134679);
-//		
 //		employees.add(testNewEmployee);
-//		
 //		printEmployees(employees);
 	
 		Scanner scan = new Scanner(System.in);
-		boolean keepEditing = false;
 		
 		System.out.println("Would you like to initialize employees file? ('yes' or 'no')");
-		String initialize = scan.nextLine().trim().toLowerCase();
+		String initialize = scan.nextLine();
+		initialize = initialize.trim();
+		initialize = initialize.toLowerCase();
 		
 		switch(initialize) {
 		case "yes":
@@ -48,8 +43,11 @@ public class EmployeeManagementSystem {
 			break;
 		}
 		
+		boolean keepEditingBool = false;
+		
 		List<Employee> employees = readEmployees();
 		printEmployees(employees);
+		System.out.println("\n");
 		
 		do {
 			System.out.println("What would you like to do with Employee list?");
@@ -73,7 +71,7 @@ public class EmployeeManagementSystem {
 				System.out.println("What is the new employee's department? (enum)");
 				Department department = Department.valueOf(scan.nextLine().trim().toUpperCase());
 				
-				System.out.println("What is the new employee's id? (6 digit int)");
+				System.out.println("What is the new employee's id? (int)");
 				int id = scan.nextInt();
 				
 				System.out.println("What is the new employee's salary? (int)");
@@ -110,6 +108,7 @@ public class EmployeeManagementSystem {
 				System.out.println("What is the id of the employee you wish to remove? (int)");
 				int toRemoveId = scan.nextInt();
 				
+				scan.nextLine();
 				removeEmployee(employees, toRemoveId);
 				
 				break;
@@ -126,10 +125,21 @@ public class EmployeeManagementSystem {
 			
 			printEmployees(employees);
 			
-			System.out.println("Would you like to keep editing? (boolean)");
-			keepEditing = scan.nextBoolean();
+			System.out.println("Would you like to keep editing? ('yes' or 'no')");
+			String keepEditing = scan.nextLine();
+			keepEditing = keepEditing.trim();
+			keepEditing = keepEditing.toLowerCase();
 			
-		} while(keepEditing);
+			switch(keepEditing) {
+			case "yes":
+				keepEditingBool = true;
+				break;
+			case "no":
+				keepEditingBool = false;
+				break;
+			}
+			
+		} while(keepEditingBool);
 		
 		scan.close();
 		
