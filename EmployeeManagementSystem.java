@@ -9,8 +9,7 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import com.cognixia.JUMP.intermediateJava.filesIO.Person;
+import java.util.Scanner;
 
 public class EmployeeManagementSystem {
 
@@ -19,6 +18,18 @@ public class EmployeeManagementSystem {
 		initializeEmployees();
 		
 		List<Employee> employees = readEmployees();
+	
+		Scanner scan = new Scanner(System.in);
+		
+		Employee newEmployee = new Employee(Department.HUMAN_RESOURCES, 44000, "Maddie", "Sherman", 147852);
+		
+		updateSalary(employees, 123456, 62000);
+		
+		updateDepartment(employees, 135790, Department.MANAGEMENT);
+		
+		removeEmployee(employees, 134679);
+//		
+//		employees.add(newEmployee);
 
 	}
 	
@@ -37,26 +48,21 @@ public class EmployeeManagementSystem {
 		
 		try (ObjectOutputStream writer = new ObjectOutputStream(new FileOutputStream(file))){
 
-			Employee employee1 = new Employee(Department.ACCOUNTING, 50000, "Alexa", "Lee", 123456);
-			Employee employee2 = new Employee(Department.HUMAN_RESOURCES, 63000, "Fern", "West", 987654);
-			Employee employee3 = new Employee(Department.MANAGEMENT, 74000, "Constance", "Lin", 246801);
-			Employee employee4 = new Employee(Department.MARKETING, 43000, "Daniella", "McCarthy", 135790);
-			Employee employee5 = new Employee(Department.OPERATIONS, 47000, "Connie", "Porter", 124578);
-			Employee employee6 = new Employee(Department.PRODUCTION, 60000, "Flora", "Harris", 235689);
-			Employee employee7 = new Employee(Department.PURCHASING, 54000, "Rhea", "Parsons", 134679);
-			Employee employee8 = new Employee(Department.RESEARCH_AND_DEVELOPMENT, 71000, "Hannah", "Campos", 125678);
-			Employee employee9 = new Employee(Department.SALES, 53000, "Esme", "Hammond", 234589);
+			Employee employee01 = new Employee(Department.ACCOUNTING, 50000, "Alexa", "Lee", 123456);
+			Employee employee02 = new Employee(Department.HUMAN_RESOURCES, 63000, "Fern", "West", 987654);
+			Employee employee03 = new Employee(Department.MANAGEMENT, 74000, "Constance", "Lin", 246801);
+			Employee employee04 = new Employee(Department.MARKETING, 43000, "Daniella", "McCarthy", 135790);
+			Employee employee05 = new Employee(Department.OPERATIONS, 47000, "Connie", "Porter", 124578);
+			Employee employee06 = new Employee(Department.PRODUCTION, 60000, "Flora", "Harris", 235689);
+			Employee employee07 = new Employee(Department.PURCHASING, 54000, "Rhea", "Parsons", 134679);
+			Employee employee08 = new Employee(Department.RESEARCH_AND_DEVELOPMENT, 71000, "Hannah", "Campos", 125678);
+			Employee employee09 = new Employee(Department.SALES, 53000, "Esme", "Hammond", 234589);
 			
-			writer.writeObject(employee1);
-			writer.writeObject(employee2);
-			writer.writeObject(employee3);
-			writer.writeObject(employee4);
-			writer.writeObject(employee5);
-			writer.writeObject(employee6);
-			writer.writeObject(employee7);
-			writer.writeObject(employee8);
-			writer.writeObject(employee9);
+			List<Employee> employees = Arrays.asList(employee01, employee02, employee03, employee04, employee05, 
+					employee06, employee07, employee08, employee09);
 			
+			writer.writeObject(employees);
+
 		} catch(IOException e) {
 			System.out.println("System did not add employees to file");
 			e.printStackTrace();
@@ -69,18 +75,7 @@ public class EmployeeManagementSystem {
 		
 		try (ObjectInputStream reader = new ObjectInputStream(new FileInputStream(file))){
 			
-			Employee employee01 = (Employee) reader.readObject();
-			Employee employee02 = (Employee) reader.readObject();
-			Employee employee03 = (Employee) reader.readObject();
-			Employee employee04 = (Employee) reader.readObject();
-			Employee employee05 = (Employee) reader.readObject();
-			Employee employee06 = (Employee) reader.readObject();
-			Employee employee07 = (Employee) reader.readObject();
-			Employee employee08 = (Employee) reader.readObject();
-			Employee employee09 = (Employee) reader.readObject();
-			
-			List<Employee> employees = Arrays.asList(employee01, employee02, employee03, employee04, employee05, 
-					employee06, employee07, employee08, employee09);
+			List<Employee> employees = (List<Employee>) reader.readObject();
 			
 			for(Employee employee : employees) {
 				System.out.println(employee.toString());
@@ -96,6 +91,35 @@ public class EmployeeManagementSystem {
 			e.printStackTrace();
 			List<Employee> employees = new ArrayList<Employee>();
 			return employees;
+		}
+	}
+	
+	public static void writeToEmployees(List<Employee> employees) {
+		File file = new File("resources/employeesList.data");
+	}
+	
+	public static void updateSalary(List<Employee> employees, int id, int salary) {
+		for(int i = 0; i < employees.size(); i++) {
+			if(employees.get(i).getId() == id) {
+				employees.get(i).setSalary(salary);
+			}
+		}
+	}
+	
+	public static void updateDepartment(List<Employee> employees, int id, Department department) {
+		for(int i = 0; i < employees.size(); i++) {
+			if(employees.get(i).getId() == id) {
+				employees.get(i).setDepartment(department);
+			}
+		}
+	}
+	
+	public static void removeEmployee(List<Employee> employees, int id) {
+		for(int i = 0; i < employees.size(); i++) {
+			if(employees.get(i).getId() == id) {
+				System.out.println("found employee");
+				employees.remove(i);
+			}
 		}
 	}
 
