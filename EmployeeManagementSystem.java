@@ -14,97 +14,126 @@ public class EmployeeManagementSystem {
 
 	public static void main(String[] args) {
 		
-		initializeEmployees();
+//		initializeEmployees();
+//		
+//		List<Employee> employees = readEmployees();
 		
-		List<Employee> employees = readEmployees();
-		
-		printEmployees(employees);
-		
-		updateSalary(employees, 123456, 62000);
-		
-		updateDepartment(employees, 135790, Department.MANAGEMENT);
-
-		countEmployees(employees);
-		
-		Employee testNewEmployee = new Employee(Department.HUMAN_RESOURCES, 44000, "Maddie", "Sherman", 147852);
-		
-		removeEmployee(employees, 134679);
-		
-		employees.add(testNewEmployee);
-		
-		printEmployees(employees);
+//		printEmployees(employees);
+//		
+//		updateSalary(employees, 123456, 62000);
+//		
+//		updateDepartment(employees, 135790, Department.MANAGEMENT);
+//
+//		countEmployees(employees);
+//		
+//		Employee testNewEmployee = new Employee(Department.HUMAN_RESOURCES, 44000, "Maddie", "Sherman", 147852);
+//		
+//		removeEmployee(employees, 134679);
+//		
+//		employees.add(testNewEmployee);
+//		
+//		printEmployees(employees);
 	
 		Scanner scan = new Scanner(System.in);
-		System.out.println("What would you like to do with Employee list?");
-		System.out.println("1 : Add employee");
-		System.out.println("2 : Update Salary");
-		System.out.println("3 : Update Department");
-		System.out.println("4 : Remove employee");
-		System.out.println("5 : Count employee");
-		int input = scan.nextInt();
-		scan.nextLine();
+		boolean keepEditing = false;
 		
-		switch(input) {
-		case 1:
-			System.out.println("What is the new employee's first name? (String)");
-			String firstName = scan.nextLine();
-			
-			System.out.println("What is the new employee's last name? (String)");
-			String lastName = scan.nextLine();
-			
-			System.out.println("What is the new employee's department? (enum)");
-			Department department = Department.valueOf(scan.nextLine().trim().toUpperCase());
-			
-			System.out.println("What is the new employee's id? (6 digit int)");
-			int id = scan.nextInt();
-			
-			System.out.println("What is the new employee's salary? (int)");
-			int salary = scan.nextInt();
-			scan.nextLine();
-			
-			Employee newEmployee = new Employee(department, salary, firstName, lastName, id);
-			employees.add(newEmployee);
-			
+		System.out.println("Would you like to initialize employees file? ('yes' or 'no')");
+		String initialize = scan.nextLine().trim().toLowerCase();
+		
+		switch(initialize) {
+		case "yes":
+			initializeEmployees();
 			break;
-		case 2:
-			System.out.println("What's the id of the employee whose salary you would like to update? (int)");
-			int updatedSalaryId = scan.nextInt();
-			
-			System.out.println("How much should their salary be?");
-			int updatedSalary = scan.nextInt();
-			
-			scan.nextLine();
-			updateSalary(employees, updatedSalaryId, updatedSalary);
-			
-			break;
-		case 3:
-			System.out.println("What's the id of the employee whose salary you would like to update? (int)");
-			int updatedDepartmentId = scan.nextInt();
-
-			System.out.println("What department do they now belong to? (enum)");
-			Department updatedDepartment = Department.valueOf(scan.nextLine().trim().toUpperCase());
-			
-			updateDepartment(employees, updatedDepartmentId, updatedDepartment);
-
-			break;
-		case 4:
-			System.out.println("What is the id of the employee you wish to remove?");
-			int toRemoveId = scan.nextInt();
-			
-			removeEmployee(employees, toRemoveId);
-			
-			break;
-		case 5:
-			countEmployees(employees);
-			break;
-		default:
-			System.out.println("Please select an integer from 1-5");
+		case "no":
 			break;
 		}
 		
-		writeToEmployees(employees);
+		List<Employee> employees = readEmployees();
+		printEmployees(employees);
+		
+		do {
+			System.out.println("What would you like to do with Employee list?");
+			System.out.println("1 : Add employee");
+			System.out.println("2 : Update Salary");
+			System.out.println("3 : Update Department");
+			System.out.println("4 : Remove employee");
+			System.out.println("5 : Count employee");
+			System.out.println("6 : Print out employees");
+			int input = scan.nextInt();
+			scan.nextLine();
+			
+			switch(input) {
+			case 1:
+				System.out.println("What is the new employee's first name? (String)");
+				String firstName = scan.nextLine();
+				
+				System.out.println("What is the new employee's last name? (String)");
+				String lastName = scan.nextLine();
+				
+				System.out.println("What is the new employee's department? (enum)");
+				Department department = Department.valueOf(scan.nextLine().trim().toUpperCase());
+				
+				System.out.println("What is the new employee's id? (6 digit int)");
+				int id = scan.nextInt();
+				
+				System.out.println("What is the new employee's salary? (int)");
+				int salary = scan.nextInt();
+				scan.nextLine();
+				
+				Employee newEmployee = new Employee(department, salary, firstName, lastName, id);
+				employees.add(newEmployee);
+				
+				break;
+			case 2:
+				System.out.println("What's the id of the employee whose salary you would like to update? (int)");
+				int updatedSalaryId = scan.nextInt();
+				
+				System.out.println("How much should their salary be? (int)");
+				int updatedSalary = scan.nextInt();
+				
+				scan.nextLine();
+				updateSalary(employees, updatedSalaryId, updatedSalary);
+				
+				break;
+			case 3:
+				System.out.println("What's the id of the employee whose salary you would like to update? (int)");
+				int updatedDepartmentId = scan.nextInt();
+				scan.nextLine();
+
+				System.out.println("What department do they now belong to? (enum)");
+				Department updatedDepartment = Department.valueOf(scan.nextLine().trim().toUpperCase());
+				
+				updateDepartment(employees, updatedDepartmentId, updatedDepartment);
+
+				break;
+			case 4:
+				System.out.println("What is the id of the employee you wish to remove? (int)");
+				int toRemoveId = scan.nextInt();
+				
+				removeEmployee(employees, toRemoveId);
+				
+				break;
+			case 5:
+				countEmployees(employees);
+				break;
+			case 6:
+				printEmployees(employees);
+				break;
+			default:
+				System.out.println("Please select an integer from 1-6");
+				break;
+			}
+			
+			printEmployees(employees);
+			
+			System.out.println("Would you like to keep editing? (boolean)");
+			keepEditing = scan.nextBoolean();
+			
+		} while(keepEditing);
 		
 		scan.close();
+		
+		writeToEmployees(employees);
 		
 	}
 	
@@ -154,7 +183,7 @@ public class EmployeeManagementSystem {
 	
 	public static List<Employee> readEmployees() {
 		
-		File file = new File("resources/employees.data");
+		File file = new File("resources/employees.txt");
 		
 		try (ObjectInputStream reader = new ObjectInputStream(new FileInputStream(file))){
 			
@@ -166,10 +195,12 @@ public class EmployeeManagementSystem {
 			
 		} catch(IOException e) {
 			e.printStackTrace();
+			System.out.println("Could not read employees.txt");
 			List<Employee> employees = new ArrayList<Employee>();
 			return employees;
 		} catch(ClassNotFoundException e) {
 			e.printStackTrace();
+			System.out.println("Could not read employees.txt");
 			List<Employee> employees = new ArrayList<Employee>();
 			return employees;
 		}
@@ -187,7 +218,7 @@ public class EmployeeManagementSystem {
 		try (ObjectOutputStream writer = new ObjectOutputStream(new FileOutputStream(file))){
 			writer.writeObject(employees);
 		} catch(IOException e) {
-			System.out.println("System did update employees file");
+			System.out.println("System did not update employees file");
 			e.printStackTrace();
 		}
 	}
