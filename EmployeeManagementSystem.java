@@ -18,14 +18,6 @@ import java.util.Scanner;
 public class EmployeeManagementSystem {
 
 	public static void main(String[] args) {
-		
-//		updateSalary(employees, 123456, 62000);
-//		updateDepartment(employees, 135790, Department.MANAGEMENT);
-//		countEmployees(employees);
-//		Employee testNewEmployee = new Employee(Department.HUMAN_RESOURCES, 44000, "Maddie", "Sherman", 147852);
-//		removeEmployee(employees, 134679);
-//		employees.add(testNewEmployee);
-//		printEmployees(employees);
 	
 		Scanner scan = new Scanner(System.in);
 		
