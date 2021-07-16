@@ -2,7 +2,7 @@ package com.cognixia.JUMP.intermediateJava.employeemanagementsystem;
 
 import java.io.Serializable;
 
-public class Employee implements Serializable {
+public class Employee extends Person implements Serializable {
 
 	/**
 	 * 
@@ -10,17 +10,13 @@ public class Employee implements Serializable {
 	private static final long serialVersionUID = -5407993219272094642L;
 	
 	private Department department;
-	private int Salary;
-	private String firstName;
-	private String lastName;
+	private int salary;
 	private int id;
 	
 	public Employee(Department department, int salary, String firstName, String lastName, int id) {
-		super();
+		super(firstName, lastName);
 		this.department = department;
-		Salary = salary;
-		this.firstName = firstName;
-		this.lastName = lastName;
+		this.salary = salary;
 		this.id = id;
 	}
 
@@ -33,27 +29,11 @@ public class Employee implements Serializable {
 	}
 
 	public int getSalary() {
-		return Salary;
+		return salary;
 	}
 
 	public void setSalary(int salary) {
-		Salary = salary;
-	}
-
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+		this.salary = salary;
 	}
 
 	public int getId() {
@@ -66,7 +46,7 @@ public class Employee implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Employee [department=" + department + ", Salary=" + Salary + ", firstName=" + firstName + ", lastName="
+		return "Employee [department=" + department + ", Salary=" + salary + ", firstName=" + firstName + ", lastName="
 				+ lastName + ", id=" + id + "]";
 	}	
 	
