@@ -1,8 +1,11 @@
 package com.cognixia.JUMP.intermediateJava.employeemanagementsystem;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -16,20 +19,23 @@ public class EmployeeManagementSystem {
 
 	public static void main(String[] args) {
 		
-//		initializeEmployees();
-//		
-		List<Employee> employees = readEmployees();
+		initializeEmployees();
+		
+		List<Employee> employeesInit = readEmployees();
+
+		writeToCSVFile(employeesInit);
+		
+		List<Employee> employees = readFromCSV();
 		
 		printEmployees(employees);
 
-		writeToCSVFile(employees);
-//		updateSalary(employees, 123456, 62000);
-//		updateDepartment(employees, 135790, Department.MANAGEMENT);
-//		countEmployees(employees);
-//		Employee testNewEmployee = new Employee(Department.HUMAN_RESOURCES, 44000, "Maddie", "Sherman", 147852);
-//		removeEmployee(employees, 134679);
-//		employees.add(testNewEmployee);
-//		printEmployees(employees);
+		updateSalary(employees, 123456, 62000);
+		updateDepartment(employees, 135790, Department.MANAGEMENT);
+		countEmployees(employees);
+		Employee testNewEmployee = new Employee(Department.HUMAN_RESOURCES, 44000, "Maddie", "Sherman", 147852);
+		removeEmployee(employees, 134679);
+		employees.add(testNewEmployee);
+		printEmployees(employees);
 	
 //		Scanner scan = new Scanner(System.in);
 //		
@@ -146,7 +152,7 @@ public class EmployeeManagementSystem {
 //		
 //		scan.close();
 		
-		writeToEmployees(employees);
+		writeToCSVFile(employees);
 		
 	}
 	
@@ -291,7 +297,7 @@ public class EmployeeManagementSystem {
 		FileWriter csvWriter = null;
 		
 		try {
-			csvWriter = new FileWriter("resources/employees.csv");
+			csvWriter = new FileWriter(csvFile);
 			csvWriter.append("Department,Salary,FirstName,LastName,Id\n");
 			
 			for(List<String> row : employeeCSV) {
@@ -312,5 +318,39 @@ public class EmployeeManagementSystem {
 			}
 		}
 
+	}
+	
+	public static List<Employee> readFromCSV() {
+		File file = new File("resources/employees.csv");
+		FileReader fileReader = null;
+		try {
+			fileReader = new FileReader(file);
+		} catch (FileNotFoundException e) {
+			System.out.println("Couldn't find employees.csv");
+			e.printStackTrace();
+		}
+		BufferedReader csvReader = new BufferedReader(fileReader);
+		
+		String line = "";
+		List<Employee> employees = new ArrayList<Employee>();
+		
+		try {						// Skip header row
+			csvReader.readLine();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		
+		try {
+			while((line = csvReader.readLine()) != null) {
+				String[] employee = line.split(",");
+				employees.add(new Employee(Department.valueOf(employee[0].trim().toUpperCase()),
+						Integer.parseInt(employee[1]), employee[2], employee[3], Integer.parseInt(employee[4])));
+			}
+		} catch (IOException e) {
+			System.out.println("Couldn't read employee line from csv file");
+			e.printStackTrace();
+		}
+		
+		return employees;
 	}
 }
