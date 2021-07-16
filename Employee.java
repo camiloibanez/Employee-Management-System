@@ -1,7 +1,14 @@
 package com.cognixia.JUMP.intermediateJava.employeemanagementsystem;
 
-public class Employee {
+import java.io.Serializable;
 
+public class Employee implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5407993219272094642L;
+	
 	private Department department;
 	private int Salary;
 	private String firstName;
