@@ -44,6 +44,8 @@ public class EmployeeManagementSystem {
 			break;
 		case "no":
 			break;
+		default:
+			break;
 		}
 		
 		boolean keepEditingBool = false;
@@ -122,7 +124,6 @@ public class EmployeeManagementSystem {
 				countEmployees(employees);
 				break;
 			case 6:		// Print employees
-				printEmployees(employees);
 				break;
 			case 7:		// Update First name
 				System.out.println("What's the id of the employee whose first name you would like to update? (int)");
@@ -172,6 +173,10 @@ public class EmployeeManagementSystem {
 			case "no":
 				keepEditingBool = false;
 				break;
+			default:
+				keepEditingBool = false;
+				break;
+				
 			}
 			
 		} while(keepEditingBool);
@@ -315,7 +320,7 @@ public class EmployeeManagementSystem {
 	
 	public static void countEmployees(List<Employee> employees) {
 		long count = employees.stream().distinct().count();
-		System.out.println("There are " + count + " employees");
+		System.out.println("There are " + count + " employees\n");
 	}
 
 	public static void writeToCSVFile(List<Employee> employees) {
