@@ -62,11 +62,12 @@ public class EmployeeManagementSystem {
 			System.out.println("6 : Print out employees");
 			System.out.println("7 : Update first name");
 			System.out.println("8 : Update last name");
+			System.out.println("9 : Print Department List");
 			int input = scan.nextInt();
 			scan.nextLine();
 			
 			switch(input) {
-			case 1:
+			case 1:		// New employee
 				System.out.println("What is the new employee's first name? (String)");
 				String firstName = scan.nextLine();
 				
@@ -87,7 +88,7 @@ public class EmployeeManagementSystem {
 				employees.add(newEmployee);
 				
 				break;
-			case 2:
+			case 2:		// Update Salary
 				System.out.println("What's the id of the employee whose salary you would like to update? (int)");
 				int updatedSalaryId = scan.nextInt();
 				
@@ -98,7 +99,7 @@ public class EmployeeManagementSystem {
 				updateSalary(employees, updatedSalaryId, updatedSalary);
 				
 				break;
-			case 3:
+			case 3:		// Update Department
 				System.out.println("What's the id of the employee whose department you would like to update? (int)");
 				int updatedDepartmentId = scan.nextInt();
 				scan.nextLine();
@@ -109,7 +110,7 @@ public class EmployeeManagementSystem {
 				updateDepartment(employees, updatedDepartmentId, updatedDepartment);
 
 				break;
-			case 4:
+			case 4:		// Remove Employee
 				System.out.println("What is the id of the employee you wish to remove? (int)");
 				int toRemoveId = scan.nextInt();
 				
@@ -117,13 +118,13 @@ public class EmployeeManagementSystem {
 				removeEmployee(employees, toRemoveId);
 				
 				break;
-			case 5:
+			case 5:		// Count employees
 				countEmployees(employees);
 				break;
-			case 6:
+			case 6:		// Print employees
 				printEmployees(employees);
 				break;
-			case 7:
+			case 7:		// Update First name
 				System.out.println("What's the id of the employee whose first name you would like to update? (int)");
 				int updatedFirstNameId = scan.nextInt();
 				
@@ -132,7 +133,7 @@ public class EmployeeManagementSystem {
 				
 				updateFirstName(employees, updatedFirstNameId, updatedFirstName);
 				break;
-			case 8:
+			case 8:		// Update Last name
 				System.out.println("What's the id of the employee whose last name you would like to update? (int)");
 				int updatedLastNameId = scan.nextInt();
 				
@@ -141,8 +142,14 @@ public class EmployeeManagementSystem {
 				
 				updateLastName(employees, updatedLastNameId, updatedLastName);
 				break;
+			case 9:		// Print department list
+				System.out.println("What department do you want to look at? (enum)");
+				Department departmentListDepartment = Department.valueOf(scan.nextLine().trim().toUpperCase());
+				
+				departmentEmployeeList(employees, departmentListDepartment);
+				break;
 			default:
-				System.out.println("Please select an integer from 1-8");
+				System.out.println("Please select an integer from 1-9");
 				break;
 			}
 			
@@ -390,5 +397,13 @@ public class EmployeeManagementSystem {
 		}
 		
 		return employees;
+	}
+	
+	public static void departmentEmployeeList(List<Employee> employees, Department department) {
+		for(int i = 0; i < employees.size(); i++) {
+			if (employees.get(i).getDepartment().equals(department)) {
+				System.out.println(employees.get(i).toString());
+			}	
+		}
 	}
 }
