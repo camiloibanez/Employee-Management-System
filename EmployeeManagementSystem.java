@@ -47,7 +47,7 @@ public class EmployeeManagementSystem {
 		System.out.println("\n");
 		
 		do {
-			boolean printedDepartmentList = false;
+			boolean doNotPrint = false;
 			
 			System.out.println("What would you like to do with Employee list?");
 			System.out.println("1 : Add employee");
@@ -92,10 +92,9 @@ public class EmployeeManagementSystem {
 				
 				departmentEmployeeList(employees, departmentListDepartment);
 				
-				printedDepartmentList = true;
+				doNotPrint = true;
 
 				break;
-
 			case 4:		// Update Salary
 				System.out.println("What's the id of the employee whose salary you would like to update? (int)");
 				int updatedSalaryId = scan.nextInt();
@@ -150,13 +149,15 @@ public class EmployeeManagementSystem {
 				break;
 			case 9:		// Count employees
 				countEmployees(employees);
+				doNotPrint = true;
 				break;
 			default:
 				System.out.println("Please select an integer from 1-9");
+				doNotPrint = true;
 				break;
 			}
 			
-			if(!printedDepartmentList) {
+			if(!doNotPrint) {
 				printEmployees(employees);	
 			}
 			
@@ -254,21 +255,19 @@ public class EmployeeManagementSystem {
 			return employees;
 		}
 	}
-	
-	public static void writeToEmployees(List<Employee> employees) {
-		File file = new File("resources/employees.txt");
 		
-		try (ObjectOutputStream writer = new ObjectOutputStream(new FileOutputStream(file))){
-			writer.writeObject(employees);
-		} catch(IOException e) {
-			System.out.println("System did not update employees file");
-			e.printStackTrace();
-		}
-	}
-	
 	public static void printEmployees(List<Employee> employees) {
 		for(Employee employee : employees) {
 			System.out.println(employee.toString());
+		}
+	}
+	
+	public static void departmentEmployeeList(List<Employee> employees, Department department) {
+		System.out.println(department + " Department List:");
+		for(int i = 0; i < employees.size(); i++) {
+			if (employees.get(i).getDepartment().equals(department)) {
+				System.out.println(employees.get(i).toString());
+			}	
 		}
 	}
 	
@@ -412,14 +411,5 @@ public class EmployeeManagementSystem {
 		
 		return employees;
 	}
-	
-	public static void departmentEmployeeList(List<Employee> employees, Department department) {
-		System.out.println(department + " Department List:");
-		for(int i = 0; i < employees.size(); i++) {
-			if (employees.get(i).getDepartment().equals(department)) {
-				System.out.println(employees.get(i).toString());
-			}	
-		}
-		System.out.println("\n");
-	}
+
 }
