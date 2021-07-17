@@ -47,16 +47,18 @@ public class EmployeeManagementSystem {
 		System.out.println("\n");
 		
 		do {
+			boolean printedDepartmentList = false;
+			
 			System.out.println("What would you like to do with Employee list?");
 			System.out.println("1 : Add employee");
-			System.out.println("2 : Update Salary");
-			System.out.println("3 : Update Department");
-			System.out.println("4 : Remove employee");
-			System.out.println("5 : Count employees");
-			System.out.println("6 : Print out employees");
-			System.out.println("7 : Update first name");
-			System.out.println("8 : Update last name");
-			System.out.println("9 : Print Department List");
+			System.out.println("2 : Print out employees");
+			System.out.println("3 : Print Department List");
+			System.out.println("4 : Update Salary");
+			System.out.println("5 : Update Department");
+			System.out.println("6 : Update first name");
+			System.out.println("7 : Update last name");
+			System.out.println("8 : Remove employee");
+			System.out.println("9 : Count employees");
 			int input = scan.nextInt();
 			scan.nextLine();
 			
@@ -82,7 +84,19 @@ public class EmployeeManagementSystem {
 				employees.add(newEmployee);
 				
 				break;
-			case 2:		// Update Salary
+			case 2:		// Print employees
+				break;
+			case 3:		// Print department list
+				System.out.println("What department would you like to look at? (enum)");
+				Department departmentListDepartment = Department.valueOf(scan.nextLine().trim().toUpperCase());
+				
+				departmentEmployeeList(employees, departmentListDepartment);
+				
+				printedDepartmentList = true;
+
+				break;
+
+			case 4:		// Update Salary
 				System.out.println("What's the id of the employee whose salary you would like to update? (int)");
 				int updatedSalaryId = scan.nextInt();
 				
@@ -93,7 +107,7 @@ public class EmployeeManagementSystem {
 				updateSalary(employees, updatedSalaryId, updatedSalary);
 				
 				break;
-			case 3:		// Update Department
+			case 5:		// Update Department
 				System.out.println("What's the id of the employee whose department you would like to update? (int)");
 				int updatedDepartmentId = scan.nextInt();
 				scan.nextLine();
@@ -104,20 +118,7 @@ public class EmployeeManagementSystem {
 				updateDepartment(employees, updatedDepartmentId, updatedDepartment);
 
 				break;
-			case 4:		// Remove Employee
-				System.out.println("What is the id of the employee you wish to remove? (int)");
-				int toRemoveId = scan.nextInt();
-				
-				scan.nextLine();
-				removeEmployee(employees, toRemoveId);
-				
-				break;
-			case 5:		// Count employees
-				countEmployees(employees);
-				break;
-			case 6:		// Print employees
-				break;
-			case 7:		// Update First name
+			case 6:		// Update First name
 				System.out.println("What's the id of the employee whose first name you would like to update? (int)");
 				int updatedFirstNameId = scan.nextInt();
 				scan.nextLine();
@@ -128,7 +129,7 @@ public class EmployeeManagementSystem {
 				updateFirstName(employees, updatedFirstNameId, updatedFirstName);
 				
 				break;
-			case 8:		// Update Last name
+			case 7:		// Update Last name
 				System.out.println("What's the id of the employee whose last name you would like to update? (int)");
 				int updatedLastNameId = scan.nextInt();
 				scan.nextLine();
@@ -139,19 +140,25 @@ public class EmployeeManagementSystem {
 				updateLastName(employees, updatedLastNameId, updatedLastName);
 				
 				break;
-			case 9:		// Print department list
-				System.out.println("What department would you like to look at? (enum)");
-				Department departmentListDepartment = Department.valueOf(scan.nextLine().trim().toUpperCase());
+			case 8:		// Remove Employee
+				System.out.println("What is the id of the employee you wish to remove? (int)");
+				int toRemoveId = scan.nextInt();
 				
-				departmentEmployeeList(employees, departmentListDepartment);
+				scan.nextLine();
+				removeEmployee(employees, toRemoveId);
 				
+				break;
+			case 9:		// Count employees
+				countEmployees(employees);
 				break;
 			default:
 				System.out.println("Please select an integer from 1-9");
 				break;
 			}
 			
-			printEmployees(employees);
+			if(!printedDepartmentList) {
+				printEmployees(employees);	
+			}
 			
 			System.out.println("\nWould you like to keep editing? ('yes' or 'no')");
 			String keepEditing = scan.nextLine();
